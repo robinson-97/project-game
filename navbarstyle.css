@@ -1,0 +1,29 @@
+.topnav {
+    background-color: black;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+}
+
+.topnav a {
+    color: white;
+    font-size: 20px;
+    padding: 12px 18px;
+    text-decoration: none;
+}
+
+.topnav a:hover {
+    background-color: dimgrey;
+    border-bottom: 10px black;
+}
+
+.nav-content {
+    display: flex;
+    font-family: 'Bebas Neue', cursive;
+
+}
+
+body {
+    margin: 0
+}
