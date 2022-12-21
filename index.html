@@ -3,20 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="navbarstyle.css">
+    <link rel="stylesheet" href="game.css">
 </head>
 <body>
-<nav>
-    <div class="topnav">
-        <img src="" alt="logo">
-        <div class="nav-content">
-            <a href="">Home</a>
-            <a href="">Ice</a>
-            <a href="">Marcus</a>
-            <a href="">Robinson</a>
-            <a href="">Game</a>
-        </div>
-    </div>
-</nav>
+
+<canvas id="game" width="1200px" height="600px"></canvas>
+<script>
+    let canvas = document.getElementById("game");
+    let context = canvas.getContext("2d");
+    let character_image = new Image();
+    character_image.src = "character.png";
+    character_image.onload = draw;
+
+    let player_position_x = 0;
+
+
+    function draw(){
+        context.clearRect(0,0,600,600) //is om de vorrige afbeelding te laten veranderen// // misschien slim om de image een rechte lijn te laten bewegen
+        context.drawImage(character_image, player_position_x,100, 300,150)
+        player_position_x += 1;
+
+    }
+
+    setInterval(draw,50);
+
+
+
+
+</script>
 </body>
 </html>
