@@ -1,0 +1,16 @@
+#Flappy{
+    background-color: green;
+    background-image:url(https://img.freepik.com/premium-vector/pixel-art-game-background-grass-sky-clouds_210544-60.jpg?w=2000);
+}
+
+#FlappPar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body{
+    margin: 0;
+    text-align: center;
+    font-family: 
+}
