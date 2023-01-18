@@ -18,6 +18,16 @@ var difficulty = 1;
 var obstacleInterval;
 var specialObstacleInterval;
 var difficultyInterval;
+var hond = new Image();
+hond.src = "hond.png";
+var kat = new Image();
+kat.src = "kat.png";
+var blik = new Image();
+blik.src = "blik.png";
+var vergif = new Image();
+vergif.src = "vergif.png";
+
+
 
 // luuisteren nat toetsaanslag
 document.addEventListener("keydown", keyPressed);
@@ -44,9 +54,10 @@ function gameLoop() {
         ctx.font = "20px Arial";
         ctx.fillText("Player 2 Score: " + score2, 10, 60);
 
-        ctx.fillRect(player1.x, player1.y, player1.width, player1.height);
-        ctx.fillRect(player2.x, player2.y, player2.width, player2.height);
-
+        // ctx.fillRect(player1.x, player1.y, player1.width, player1.height);
+        ctx.drawImage(hond, player1.x, player1.y, player1.width, player1.height);
+        // ctx.fillRect(player2.x, player2.y, player2.width, player2.height);
+        ctx.drawImage(kat, player2.x, player2.y, player2.width, player2.height);
         player1.y += player1.yVelocity;
         player2.y += player2.yVelocity;
 
@@ -54,7 +65,7 @@ function gameLoop() {
         player2.yVelocity += 0.2;
 
         for (var i = 0; i < obstacles.length; i++) {
-            ctx.fillRect(obstacles[i].x, obstacles[i].y, obstacles[i].width, obstacles[i].height);
+            ctx.drawImage(vergif,obstacles[i].x, obstacles[i].y, obstacles[i].width, obstacles[i].height);
             obstacles[i].x -= obstacles[i].speed;
 
             if (checkCollision(player1, obstacles[i]) || checkCollision(player2, obstacles[i])) {
@@ -74,7 +85,7 @@ function gameLoop() {
                 } else {
                     alert("Game Over!");
                 }
-                var playAgain = confirm("Do you want to play again?");
+                var playAgain = confirm("Play again?");
                 if(playAgain) {
                     resetGame();
                 }
@@ -84,7 +95,7 @@ function gameLoop() {
             }
         }    for (var i = 0; i < specialObstacles.length; i++) {
             ctx.fillStyle = specialObstacles[i].color;
-            ctx.fillRect(specialObstacles[i].x, specialObstacles[i].y, specialObstacles[i].width, specialObstacles[i].height);
+            ctx.drawImage(blik,specialObstacles[i].x, specialObstacles[i].y, specialObstacles[i].width, specialObstacles[i].height);
             specialObstacles[i].x -= specialObstacles[i].speed;
 
             if (checkCollision(player1, specialObstacles[i])) {
@@ -124,7 +135,7 @@ function createObstacle(){
     for(var i = 0; i < obstacleCount; i++){
         var randomX = canvas.width;
         var randomY = Math.random() * canvas.height;
-        obstacles.push({x: randomX, y: randomY, width: 20, height: 20, speed: difficulty});
+        obstacles.push({x: randomX, y: randomY, width: 15, height: 15, speed: difficulty});
     }
 }
 
@@ -132,19 +143,10 @@ function createSpecialObstacle(){
     for(var i = 0; i < specialObstacleCount; i++) {
         var randomX = canvas.width;
         var randomY = Math.random() * canvas.height;
-        var randomColor = getRandomColor();
-        specialObstacles.push({x: randomX, y: randomY, width: 20, height: 20, color: randomColor, points: 10, speed: difficulty});
+        specialObstacles.push({x: randomX, y: randomY, width: 20, height: 20, points: 10, speed: difficulty});
     }
 }
 
-function getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-}
 
 function increaseDifficulty() {
     difficulty += 0.5;
