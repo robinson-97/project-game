@@ -3,7 +3,7 @@ var canvas = document.getElementById("game");
 var ctx = canvas.getContext("2d");
 
 // player related variables
-var player1 = {x: 50, y: 250, width: 20, height: 20, yVelocity: 0};
+var player1 = {x: 150, y: 250, width: 20, height: 20, yVelocity: 0};
 var player2 = {x: 250, y: 250, width: 20, height: 20, yVelocity: 0};
 
 // game state variables
@@ -73,7 +73,7 @@ function gameLoop() {
                 clearInterval(obstacleInterval);
                 clearInterval(specialObstacleInterval);
                 clearInterval(difficultyInterval);
-                // display the final score
+                // laat de score zien
                 ctx.fillText("Player 1 Score: " + score1, 10, 30);
                 ctx.fillText("Player 2 Score: " + score2, 10, 60);
                 if(score1 >= 100 && score2 >= 100) {
@@ -155,7 +155,7 @@ function increaseDifficulty() {
 }
 
 function resetGame() {
-    player1 = {x: 50, y: 250, width: 20, height: 20, yVelocity: 0};
+    player1 = {x: 150, y: 250, width: 20, height: 20, yVelocity: 0};
     player2 = {x: 250, y: 250, width: 20, height: 20, yVelocity: 0};
     obstacles = [];
     score1 = 0;
