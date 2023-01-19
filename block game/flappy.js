@@ -29,34 +29,34 @@ vergif.src = "vergif.png";
 
 
 
-// luuisteren nat toetsaanslag
+// zorgt ervoor dat het spel naar toetsaaanslagen luistert 
 document.addEventListener("keydown", keyPressed);
 
-// toets die wordt aangeslagen
+// welke toetsen doen wat 
 function keyPressed(event) {
-    if (event.code === "KeyW" && gameRunning) {
+    if (event.code === "KeyS" && gameRunning) {
         player1.yVelocity = -3;
-    } else if (event.code === "ArrowUp" && gameRunning) {
+    } else if (event.code === "KeyK" && gameRunning) {
         player2.yVelocity = -3;
     }
 }
 
-// main game loop
+// main gameloop (wat moet er uitgevoerd worden tijdens het spel)
 function gameLoop() {
     if(gameRunning){
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         // display player1 score on canvas
-        ctx.font = "20px Arial";
+        ctx.font = "20px, https://fonts.googleapis.com/css2?family=Righteous&display=swap";
         ctx.fillText("Player 1 Score: " + score1, 10, 30);
 
         // display player2 score on canvas
         ctx.font = "20px Arial";
         ctx.fillText("Player 2 Score: " + score2, 10, 60);
-
-        // ctx.fillRect(player1.x, player1.y, player1.width, player1.height);
+        
+        
+        //tekent de hond en de kat op het canvas
         ctx.drawImage(hond, player1.x, player1.y, player1.width, player1.height);
-        // ctx.fillRect(player2.x, player2.y, player2.width, player2.height);
         ctx.drawImage(kat, player2.x, player2.y, player2.width, player2.height);
         player1.y += player1.yVelocity;
         player2.y += player2.yVelocity;
@@ -67,8 +67,25 @@ function gameLoop() {
         for (var i = 0; i < obstacles.length; i++) {
             ctx.drawImage(vergif,obstacles[i].x, obstacles[i].y, obstacles[i].width, obstacles[i].height);
             obstacles[i].x -= obstacles[i].speed;
+            if(score1 >= 100 || score2 >= 100) {
+                gameRunning = false;
+                clearInterval(obstacleInterval);
+                clearInterval(specialObstacleInterval);
+                clearInterval(difficultyInterval);
+                if(score1 >= 100 && score2 >= 100) {
+                    alert("It's a tie!");
+                } else if(score1 >= 100) {
+                    alert("Player 1 wins!");
+                }else if(score2 >= 100) {
+                    alert("Player 2 wins!");
+                }
+                var playAgain = confirm("Play again?");
+                if(playAgain) {
+                    resetGame();
+                }
+            }
 
-            if (checkCollision(player1, obstacles[i]) || checkCollision(player2, obstacles[i])) {
+            if (checkCollision(player1,obstacles[i]) || checkCollision(player2, obstacles[i])) {
                 gameRunning = false;
                 clearInterval(obstacleInterval);
                 clearInterval(specialObstacleInterval);
@@ -79,9 +96,9 @@ function gameLoop() {
                 if(score1 >= 100 && score2 >= 100) {
                     alert("It's a tie!");
                 } else if(score1 >= 100) {
-                    alert("Player 1 wins!");
+                    alert("Cat wins!");
                 }else if(score2 >= 100) {
-                    alert("Player 2 wins!");
+                    alert("Dog wins!");
                 } else {
                     alert("Game Over!");
                 }
@@ -94,7 +111,6 @@ function gameLoop() {
                 obstacles.splice(i, 1);
             }
         }    for (var i = 0; i < specialObstacles.length; i++) {
-            ctx.fillStyle = specialObstacles[i].color;
             ctx.drawImage(blik,specialObstacles[i].x, specialObstacles[i].y, specialObstacles[i].width, specialObstacles[i].height);
             specialObstacles[i].x -= specialObstacles[i].speed;
 
@@ -107,7 +123,7 @@ function gameLoop() {
             } else if (specialObstacles[i].x + specialObstacles[i].width < 0) {
                 specialObstacles.splice(i, 1);
             }
-        }    //check if player goes outside of canvas
+        }    //kijkt of de speler zich niet buiten het canvas verplaatst
         if(player1.x < 0 || player1.x + player1.width > canvas.width || player1.y < 0 || player1.y + player1.height > canvas.height
             || player2.x < 0 || player2.x + player2.width > canvas.width || player2.y < 0 || player2.y + player2.height > canvas.height) {
             gameRunning = false;
@@ -115,7 +131,7 @@ function gameLoop() {
             clearInterval(specialObstacleInterval);
             clearInterval(difficultyInterval);
             alert("Game over!");
-            var playAgain = confirm("Do you want to play again?");
+            var playAgain = confirm("Play again?");
             if(playAgain) {
                 resetGame();
             }
@@ -130,7 +146,7 @@ function checkCollision(player, obstacle) {
         player.y < obstacle.y + obstacle.height &&
         player.y + player.height > obstacle.y;
 }
-
+//afmetingen van de obstacles
 function createObstacle(){
     for(var i = 0; i < obstacleCount; i++){
         var randomX = canvas.width;
@@ -173,7 +189,7 @@ function resetGame() {
 
 var obstacleInterval = setInterval(createObstacle, 1000);
 var specialObstacleInterval = setInterval(createSpecialObstacle, 3000);
-var difficultyInterval = setInterval(increaseDifficulty, 10000);
+var difficultyInterval = setInterval(increaseDifficulty, 7500);
 
 gameLoop();
 
